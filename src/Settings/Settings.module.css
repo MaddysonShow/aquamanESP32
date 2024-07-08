@@ -1,0 +1,194 @@
+.settingsContainer * {
+    margin: 10px 0 10px 0;
+}
+
+.settingsContainer {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    background: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: scroll;
+    padding: 20px; /* Добавляем отступы для контейнера */
+}
+
+h1, label {
+    font-size: 1.5em;
+    color: white;
+}
+
+select, input {
+    font-size: 1.5em;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.optionContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    text-align: center;
+    border: 2px solid #ffffff; /* Добавляем рамку между блоками */
+    border-radius: 10px; /* Закругляем углы рамки */
+    padding: 10px;
+}
+
+.container button, .container2 a, button
+{
+        margin-bottom: 20px;
+        display: inline-block;
+        outline: 0;
+        cursor: pointer;
+        padding: 5px 16px;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+        vertical-align: middle;
+        border: 1px solid;
+        border-radius: 6px;
+        color: #ffffff;
+        background-color: #2ea44f;
+        border-color: #1b1f2326;
+        box-shadow: rgba(27, 31, 35, 0.04) 0px 1px 0px 0px, rgba(255, 255, 255, 0.25) 0px 1px 0px 0px inset;
+        transition: 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+        transition-property: color, background-color, border-color;
+        :hover {
+            background-color: #2c974b;
+            border-color: #1b1f2326;
+            transition-duration: 0.1s;
+        }
+    }
+.back {
+
+    margin: 0 0 20px 0;
+    display: inline-block;
+    outline: 0;
+    cursor: pointer;
+    font-weight: 500;
+    line-height: 20px;
+    vertical-align: middle;
+    border: 1px solid;
+    border-radius: 6px;
+    color: #ffffff;
+    border-color: #1b1f2326;
+    box-shadow: rgba(27, 31, 35, 0.04) 0px 1px 0px 0px, rgba(255, 255, 255, 0.25) 0px 1px 0px 0px inset;
+    transition: 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+    transition-property: color, background-color, border-color;
+    :hover {
+        background-color: #2c974b;
+        border-color: #1b1f2326;
+        transition-duration: 0.1s;
+    }
+
+    font-size: 50px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: red;
+    padding: 20px;
+}
+
+
+.submitBtn {
+    background: #4dff50;
+}
+
+.chkBox {
+    width: 30px;
+    height: 30px;
+    align-self: center;
+}
+
+
+.container2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    border: 2px solid #ffffff; /* Добавляем рамку между блоками */
+    border-radius: 10px; /* Закругляем углы рамки */
+    padding: 10px;
+}
+
+.downloadLink {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 10px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.downloadLink:hover {
+    background-color: #0056b3;
+}
+
+.uploadContainer {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.uploadLabel {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.uploadInput {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: white; /* Фон для input file */
+    color: black; /* Цвет текста в input file */
+}
+
+@media screen and (max-width: 600px) {
+    .container {
+        width: 300px;
+    }
+
+    h1, label {
+        font-size: 1.4em;
+    }
+    .downloadLink {
+        font-size: 16px;
+        padding: 8px 16px; /* Уменьшаем отступы для кнопки */
+    }
+
+    .uploadLabel {
+        font-size: 16px;
+    }
+
+    .uploadInput {
+        font-size: 14px;
+    }
+    .back {
+        position: absolute;
+        right: 0;
+        top: 0;
+        background-color: red;
+        font-size: 1em;
+        padding: 20px;
+    }
+}

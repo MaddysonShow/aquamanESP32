@@ -1,0 +1,316 @@
+#logo{
+  text-align: center;
+  color:white;
+  margin: 0 0 0 0px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+body {
+  background-color: black;
+}
+
+.syncButtonContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  top: 70%;
+  bottom: auto;
+  align-items: center;
+  text-align: center;
+}
+
+.syncButtonContainer span {
+  color: white;
+  margin: 20px 0px;
+  font-size: x-large;
+}
+
+.syncButton {
+  font-size: x-large;
+  padding: 20px 20px;
+  cursor: pointer;
+  color: white;
+  border-radius: 15px;
+}
+
+.syncButton:active {
+  color: gray;
+}
+
+.main{
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  flex-direction: column;
+  height:90%;
+  opacity: 0.9;
+  background-color:black ;
+}
+
+.main header {
+  display: flex;
+  width: 70%;
+}
+
+#clock{
+  border: solid 3px green;
+  border-radius: 10px;
+  background-color: white;
+  position: relative;
+  width: 616px;
+  height: 12%;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 20px;
+}
+
+.time{
+  background-color:white;
+  border-radius:10px;
+  border-width: 0px;
+  font-size:3em;
+}
+
+.mclock{
+  height:40%;
+  width: auto;
+}
+
+.startTimeW{
+  top:2%;
+  left:1%;
+  width:70%;
+}
+.riseTimeW{
+  top:25%;
+  left:1%;
+  width:70%;
+}
+.dawnTimeW{
+  top:48%;
+  left:1%;
+  width:70%;
+}
+.stopTimeW{
+  top:71%;
+  left:1%;
+  width:70%;
+}
+
+
+.start{
+  font-size: 1.5em;
+
+}
+
+.rise{
+  font-size: 1.5em;
+
+}
+
+.dawn{
+  font-size: 1.5em;
+
+}
+
+.stop{
+  font-size: 1.5em;
+
+}
+
+
+#textTime{
+  text-align:center;
+  font-size: 1.5em;
+
+}
+
+
+.buttons{
+  border: 3px solid green;
+  border-radius: 10px;
+  position: relative;
+  width: 616px;
+  background: rgb(6,0,25);
+  background: linear-gradient(180deg, rgba(6,0,25,1) 0%, rgba(9,9,121,0.5580357142857143) 47%, rgba(0,212,255,1) 100%);
+  height:20%;
+  padding-top: 10px;
+  margin-bottom: 10px;
+}
+
+.buttons button {
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 5px;
+  margin-bottom: 10px;
+}
+
+.btn {
+  display: flex;
+  justify-items: center;
+}
+
+
+.btn button{
+  line-height: 10%;
+  vertical-align: middle;
+  /*background-color: red;*/
+  border-radius: 15px 15px 15px 15px;
+  border-width:2px;
+  border-color: black;
+  width:60%;
+  height: 50%;
+}
+
+#textButton{
+  text-align:center;
+  font-size: 1.5em;
+
+}
+
+.show_br{
+  width: 50px;
+  height:50px;
+  font-size: 1.5em;
+}
+
+#control{
+  border: 3px solid green;
+  border-radius: 10px;
+  width: 616px;
+  height: 42%;
+  display: none;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+}
+#control input {
+  background-color: rgb(208, 208, 208);
+}
+
+.inputsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#colorBr{
+  border: 3px solid white;
+  box-shadow: 0 0 10px;
+  border-radius: 10px;
+
+  display: flex;
+}
+
+#back{
+  margin-top: 15px;
+  width:70%;
+  height:50px;
+  border-radius: 10px;
+  font-size: 1em;
+  font-weight: bold;
+  background-color: rgb(178, 178, 178);
+}
+
+.bright {
+  border-radius: 10px;
+  border-width: 0px;
+  font-size: 2em;
+  text-align: center;
+  font-weight: bold;
+  background: #c9ffc0;
+  margin: 0 5px;
+}
+
+.textMAX{
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.loader {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  background: linear-gradient(#f07e6e, #84cdfa, #5ad1cd);
+  animation: animate 1.2s linear infinite;
+}
+
+@keyframes animate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loader span {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(#f07e6e, #84cdfa, #5ad1cd);
+}
+
+.loader span:nth-child(1) {
+  filter: blur(5px);
+}
+
+.loader span:nth-child(2) {
+  filter: blur(10px);
+}
+
+.loader span:nth-child(3) {
+  filter: blur(25px);
+}
+
+.loader span:nth-child(4) {
+  filter: blur(50px);
+}
+
+.loader:after {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  background: #f1f1f1;
+  border: solid white 10px;
+  border-radius: 50%;
+}
+
+.chart {
+  width: 100%;
+  color: white;
+}
+
+@media screen and (max-width: 800px) {
+  .main header {
+    width: 303.3px;
+  }
+  #clock {
+    width: 303.3px;
+  }
+  .buttons {
+    flex-direction: column;
+    align-items: center;
+    width: 303.3px;
+  }
+  #control {
+    width: 303.3px;
+  }
+  #back {
+    width: 250px;
+  }
+}
+
+

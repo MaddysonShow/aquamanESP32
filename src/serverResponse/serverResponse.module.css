@@ -1,0 +1,20 @@
+.container {
+    position: fixed;
+    display: flex;
+    left: 10px;
+    top: 10px;
+    width: 50px;
+    height: 200px;
+    z-index: 2;
+}
+
+.isOk {
+
+}
+.message {
+    margin-bottom: 3px;
+    padding: 10px;
+    border: gray solid 3px;
+    border-radius: 6px;
+    text-align: center;
+}
