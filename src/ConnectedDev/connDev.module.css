@@ -46,8 +46,8 @@
 
 .text {
     color: white;
+    font-size: large;
     margin: 0 0 15px 0;
-
 }
 
 @media screen and (max-device-width: 700px){
@@ -57,5 +57,10 @@
         top: 0;
         background-color: red;
         font-size: 0.3em;
+    }
+    .text {
+        color: white;
+        font-size: 100%;
+        margin: 0 0 15px 0;
     }
 }

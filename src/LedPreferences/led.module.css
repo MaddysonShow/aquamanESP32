@@ -10,14 +10,14 @@
     left: 0;
     right: 0;
     align-items: center;
-    justify-content: center;
+    justify-content: safe center;
     background: #393939;
     opacity: 0.97;
     z-index: 1;
 }
 
 .leds input {
-    width: 250px;
+    /*width: 250px;*/
 }
 
 .leds button:first-child {
@@ -43,10 +43,10 @@
 
 .leds label:not(.switch) {
     display: inline-grid;
-    padding-right: 30px;
+    font-size: 30px;
     width: 40px;
-    font-size: 1em;
-    margin-right: 5px;
+    padding-right: 15px;
+    /*padding-right: 15px;*/
 }
 
 .leds button {
@@ -77,7 +77,7 @@
 }
 
 .range {
-    width: 400px;
+    width: 50vw;
     height: 15px;
     -webkit-appearance: none;
     background: #111;
@@ -95,7 +95,7 @@
     background: var(--SliderColor);
     cursor: pointer;
     border: 4px solid #333;
-    box-shadow: -407px 0 0 400px var(--SliderColor);
+    box-shadow: -507px 0 0 500px var(--SliderColor);
 }
 
 .inputContainer {
@@ -178,12 +178,12 @@ input:checked + .slider:before {
 @media screen and (max-device-width: 700px) {
     .range {
         touch-action: none;
-        width: 250px;
+        width: 80vw;
     }
 
     .leds label:not(.switch) {
-        padding-right: 0;
         font-size: 20px;
+        width: 20px;
     }
 
     .leds button:first-child {
@@ -203,3 +203,4 @@ input:checked + .slider:before {
         margin-bottom: 5px;
     }
 }
+

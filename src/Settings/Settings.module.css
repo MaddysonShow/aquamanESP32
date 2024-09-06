@@ -163,11 +163,19 @@ form {
     color: black; /* Цвет текста в input file */
 }
 
+
+.svg {
+    width: 64px;
+    height: 64px;
+}
 @media screen and (max-width: 600px) {
     .container {
         width: 300px;
     }
-
+    .svg {
+        width: 32px;
+        height: 32px;
+    }
     h1, label {
         font-size: 1.4em;
     }

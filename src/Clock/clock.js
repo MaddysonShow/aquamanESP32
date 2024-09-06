@@ -14,9 +14,16 @@ const Clock = ({setResponse}) => {
     }, [serverData]);
 
     function sendTime(val) {
-        fetch(`/settime?time=${val}`, {method: "POST"})
-            .then(data => data.text())
-            .then(data => setResponse(prev => [data, ...prev]))
+        const ID = Date.now()
+        setResponse(prev => [{value: "Время: ", response: null, taskID: ID}, ...prev])
+        fetch(`/settime?time=${val}&taskID=${Date.now()}`, {method: "POST"})
+            .then(data => data.json())
+            .then(data => setResponse(prev => prev.map(function (el) {
+                if (el.taskID == ID) {
+                    el.response = data.value
+                }
+                return el
+            })))
             .catch(er => console.log(er))
     }
 

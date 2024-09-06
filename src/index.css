@@ -2,13 +2,12 @@
   text-align: center;
   color:white;
   margin: 0 0 0 0px;
-  flex: 1;
+  font-size: 13px;
   display: flex;
-  align-items: center;
 }
 
 body {
-  background-color: black;
+  background-color: #000000;
 }
 
 .syncButtonContainer {
@@ -47,11 +46,22 @@ body {
   height:90%;
   opacity: 0.9;
   background-color:black ;
+  /*background: linear-gradient(#ffffff, #ffffff) no-repeat center/2px 100%;*/
 }
 
 .main header {
-  display: flex;
-  width: 70%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-items: stretch;
+  align-items: center;
+  width: 616px;
+  margin-bottom: 10px;
+}
+
+.main header svg {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
 }
 
 #clock{
@@ -68,6 +78,26 @@ body {
   padding-bottom: 20px;
 }
 
+#status{
+  border: solid 3px green;
+  border-radius: 10px;
+  background-color: white;
+  position: relative;
+  width: 616px;
+  height: 12%;
+  margin-bottom: 10px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-column-gap: 3px;
+  justify-content: center;
+  padding-bottom: 20px;
+}
+
+#status .statusText {
+  justify-self: end;
+}
+
 .time{
   background-color:white;
   border-radius:10px;
@@ -80,26 +110,6 @@ body {
   width: auto;
 }
 
-.startTimeW{
-  top:2%;
-  left:1%;
-  width:70%;
-}
-.riseTimeW{
-  top:25%;
-  left:1%;
-  width:70%;
-}
-.dawnTimeW{
-  top:48%;
-  left:1%;
-  width:70%;
-}
-.stopTimeW{
-  top:71%;
-  left:1%;
-  width:70%;
-}
 
 
 .start{
@@ -160,7 +170,6 @@ body {
 .btn button{
   line-height: 10%;
   vertical-align: middle;
-  /*background-color: red;*/
   border-radius: 15px 15px 15px 15px;
   border-width:2px;
   border-color: black;
@@ -290,14 +299,18 @@ body {
 
 .chart {
   width: 100%;
+  height: 50vh;
   color: white;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 680px) and (orientation: portrait) {
+  .chart{
+    height: 50vh;
+  }
   .main header {
     width: 303.3px;
   }
-  #clock {
+  #clock, #status{
     width: 303.3px;
   }
   .buttons {
@@ -312,5 +325,18 @@ body {
     width: 250px;
   }
 }
+
+@media screen and (max-height: 680px) and (orientation: landscape){
+  .chart {
+    height: 100vh;
+  }
+}
+
+@media screen and (max-height: 900px) and (orientation: landscape){
+  .chart {
+    height: 100vh;
+  }
+}
+
 
 

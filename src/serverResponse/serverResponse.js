@@ -3,20 +3,29 @@ import module from "./serverResponse.module.css"
 const ServerResponse = ({response}) => {
 
     function colText(el, ind) {
-        if (response[ind] == undefined || el[el.length-1] == (undefined || null)) {
+        if (response[ind] == undefined) {
             return
         }
+        let innerTxt = ""
         let color = "green"
-        if (el.endsWith("E")) {
-            color = "red"
+        if (!el.response) {
+            color = "white"
+            innerTxt = el.value + "..."
         }
-        return (<div key={el+ind} style={{backgroundColor: color}} className={module.message}>{el.slice(0, (el.length-1))}</div>)
+        else {
+            if (el.response.endsWith("E")) {
+                color = "red"
+            }
+            innerTxt = el.value + el.response.slice(0, (el.response.length-1))
+        }
+        return (<div key={el+ind} style={{backgroundColor: color}} className={module.message}>{innerTxt}</div>)
     }
+
     return (
         <div className={module.container}>
             <div className={module.isOk}>
                 {
-                    response.map((el, ind)=> {return colText(el, ind)})
+                    response.map((el, ind) => colText(el, ind))
                 }
             </div>
         </div>

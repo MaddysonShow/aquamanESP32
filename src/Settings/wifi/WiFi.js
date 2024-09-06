@@ -1,7 +1,9 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import styles from "../Settings.module.css";
+import {Storage} from "../../Context";
 
 const WiFi = () => {
+    const {serverData} = useContext(Storage)
     const [ssid, setSsid] = useState("")
     const [password, setPassword] = useState("")
     const [hideOldAP, setHideOldAP] = useState(0)
@@ -74,7 +76,9 @@ const WiFi = () => {
                 <input type={"checkbox"} name={"hide"} className={styles.chkBox}
                        onChange={ev => setHideOldAP(ev.target.checked ? 1 : 0)}
                        checked={hideOldAP == 1 ? true : false}/>
-                <button type={"submit"} className={styles.submitBtn}>Готово</button>
+                {   serverData.isMaster ? <h4 style={{color: "white"}}>Откройте группу для подключения</h4> :
+                    <button type={"submit"} className={styles.submitBtn}>Готово</button>
+                }
             </form>
         </div>
     );

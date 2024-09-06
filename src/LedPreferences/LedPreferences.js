@@ -9,50 +9,78 @@ const LedPreferences = ({add: plus, patch: pach, remove: del, dots, setResponse,
     const [patch, setPatch] = useState({br1: 0, br2: 0, br3: 0, br4: 0, br5: 0, br6: 0, br7: 0, br8: 0, time: null , previewActive: 0})
     const [remove, setRemove] = useState({time: null})
     const timeout = useRef(null)
-
     function getCurrentBr(time) {
         // console.log(time);
         const index = serverData.Br_time.indexOf(time)
-        setPatch({time: time, br1: serverData.Br1[index], br2: serverData.Br2[index], br3: serverData.Br3[index], br4: serverData.Br4[index], br5: serverData.Br5[index], br6: serverData.Br6[index], br7: serverData.Br7[index], br8: serverData.Br8[index], previewActive: 0})
+        setPatch(prev => { return {time: time, br1: serverData.Br1[index], br2: serverData.Br2[index], br3: serverData.Br3[index], br4: serverData.Br4[index], br5: serverData.Br5[index], br6: serverData.Br6[index], br7: serverData.Br7[index], br8: serverData.Br8[index], previewActive: prev.previewActive}})
     }
 
      function sendRemove() {
+        const ID = Date.now()
         if (!remove.time || remove.time == "Выбрать") {
-            return
+            setResponse(prev => [{value: "Удалить: ", response: "не выбрано время!E", taskID: ID}, ...prev])
         } else {
+            setResponse(prev => [{value: "Удалить: ", response: null, taskID: ID}, ...prev])
              fetch(`/setting`, {
-                method: "DELETE", body: JSON.stringify(remove)
-            }).then(data => {data.text()})
-                .then(data => setResponse(prev => [data, ...prev]))
+                method: "DELETE", body: JSON.stringify({...remove, taskID: ID})
+            }).then(data => data.json())
+            //  }).then(data => {return {value: "okO", taskID: ID}})
+               .then(data => setResponse(prev => prev.map(function (el) {
+                    if (el.taskID == ID) {
+                        el.response = data.value
+                    }
+                    return el
+                })))
                 .catch(er => console.log(er))
         }
     }
     function sendAdd() {
+        const ID = Date.now()
+        setResponse(prev => [{value: "Добавить: ", response: null, taskID: ID}, ...prev])
         fetch("/setting", {
-            method: "POST", body: JSON.stringify(add)
+            method: "POST", body: JSON.stringify({...add, taskID: ID})
         })
-            .then(data => data.text())
-            .then(data => setResponse(prev => [data, ...prev]))
+            .then(data => data.json())
+            .then(data => setResponse(prev => prev.map(function (el) {
+                if (el.taskID == ID) {
+                    el.response = data.value
+                }
+                return el
+            })))
             .catch(er => console.log(er))
     }
     function sendPatch() {
+        const ID = Date.now()
+        setResponse(prev => [{value: "Редакт.: ", response: null, taskID: ID}, ...prev])
         if (!patch.time) {
-            setResponse(prev => ["Не выбрано времяE", ...prev])
+            setResponse(prev => [{value: "Редакт.: ", response: "не выбрано время!E", taskID: ID}, ...prev])
             return;
         }
         fetch("/setting", {
             method: "PATCH", body: JSON.stringify(patch)
         })
-            .then(data => data.text())
-            .then(data => setResponse(prev => [data, ...prev]))
+            .then(data => data.json())
+            .then(data => setResponse(prev => prev.map(function (el) {
+                if (el.taskID == ID) {
+                    el.response = data.value
+                }
+                return el
+            })))
             .catch(er => console.log(er))
     }
     function sendPreview() {
+        const ID = Date.now()
+        setResponse(prev => [{value: "Превью: ", response: null, taskID: ID}, ...prev])
         fetch("/ledpreview", {
-            method: "POST", body: JSON.stringify((plus && add) || (pach && patch))
+            method: "POST", body: JSON.stringify((plus && {...add, taskID: ID}) || (pach && {...patch, taskID: ID}))
         })
-            .then(data => data.text())
-            .then(data => setResponse(prev => [data, ...prev]))
+            .then(data => data.json())
+            .then(data => setResponse(prev => prev.map(function (el) {
+                if (el.taskID == ID) {
+                    el.response = data.value
+                }
+                return el
+            })))
             .catch(er => console.log(er))
     }
 
