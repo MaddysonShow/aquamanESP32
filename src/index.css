@@ -7,38 +7,42 @@
 }
 
 body {
+  margin: 0;
   background-color: #000000;
 }
 
-.syncButtonContainer {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  top: 70%;
-  bottom: auto;
+.footerNav {
+  background-color: #363636;
+  position: sticky;
+  top: auto;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+  justify-items: center;
   align-items: center;
-  text-align: center;
+  min-height: 40px;
+  height: 10vh;
+  border: 3px solid green;
+  border-radius: 10px;
 }
 
-.syncButtonContainer span {
-  color: white;
-  margin: 20px 0px;
-  font-size: x-large;
-}
-
-.syncButton {
-  font-size: x-large;
-  padding: 20px 20px;
+.footerNav button {
+  background: none;
+  border: none;
+  width: -webkit-fill-available;
+  height: -webkit-fill-available;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
-  color: white;
-  border-radius: 15px;
 }
 
-.syncButton:active {
-  color: gray;
-}
 
 .main{
+  margin: 8px;
   display: flex;
   align-items: center;
   border-radius: 10px;
@@ -49,20 +53,6 @@ body {
   /*background: linear-gradient(#ffffff, #ffffff) no-repeat center/2px 100%;*/
 }
 
-.main header {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  justify-items: stretch;
-  align-items: center;
-  width: 616px;
-  margin-bottom: 10px;
-}
-
-.main header svg {
-  width: 30px;
-  height: 30px;
-  cursor: pointer;
-}
 
 #clock{
   border: solid 3px green;
@@ -84,11 +74,12 @@ body {
   background-color: white;
   position: relative;
   width: 616px;
-  height: 12%;
+  /*height: 12%;*/
+  /*padding*/
   margin-bottom: 10px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, 1fr);
+  /*grid-template-rows: repeat(2, 1fr);*/
   grid-column-gap: 3px;
   justify-content: center;
   padding-bottom: 20px;
@@ -108,28 +99,6 @@ body {
 .mclock{
   height:40%;
   width: auto;
-}
-
-
-
-.start{
-  font-size: 1.5em;
-
-}
-
-.rise{
-  font-size: 1.5em;
-
-}
-
-.dawn{
-  font-size: 1.5em;
-
-}
-
-.stop{
-  font-size: 1.5em;
-
 }
 
 
@@ -175,6 +144,7 @@ body {
   border-color: black;
   width:60%;
   height: 50%;
+  cursor: pointer;
 }
 
 #textButton{
@@ -327,6 +297,9 @@ body {
 }
 
 @media screen and (max-height: 680px) and (orientation: landscape){
+  .footerNav {
+    position: static;
+  }
   .chart {
     height: 100vh;
   }

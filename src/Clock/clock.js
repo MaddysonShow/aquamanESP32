@@ -25,6 +25,7 @@ const Clock = ({setResponse}) => {
                 return el
             })))
             .catch(er => console.log(er))
+            .finally(() => typeof serverData.iosFetch == "function" && serverData.iosFetch())
     }
 
     return (

@@ -3,17 +3,12 @@
 }
 
 .settingsContainer {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 1;
+    min-height: 100vh;
     background: black;
     display: flex;
     flex-direction: column;
     align-items: center;
-    overflow: scroll;
+    overflow: overlay;
     padding: 20px; /* Добавляем отступы для контейнера */
 }
 
@@ -46,7 +41,7 @@ form {
     padding: 10px;
 }
 
-.container button, .container2 a, button
+.container button, .container2 a, .container2 button
 {
         margin-bottom: 20px;
         display: inline-block;
@@ -72,7 +67,6 @@ form {
         }
     }
 .back {
-
     margin: 0 0 20px 0;
     display: inline-block;
     outline: 0;
@@ -169,6 +163,9 @@ form {
     height: 64px;
 }
 @media screen and (max-width: 600px) {
+    .settingsContainer {
+        margin-top: 50px;
+    }
     .container {
         width: 300px;
     }

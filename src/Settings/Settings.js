@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import styles from "./Settings.module.css"
 import WiFi from "./wifi/WiFi";
 import SettingFile from "./FileSetting/SettingFile";

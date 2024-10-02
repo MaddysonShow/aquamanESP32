@@ -32,6 +32,7 @@ const LedPreferences = ({add: plus, patch: pach, remove: del, dots, setResponse,
                     return el
                 })))
                 .catch(er => console.log(er))
+                 .finally(() => typeof serverData.iosFetch == "function" && serverData.iosFetch())
         }
     }
     function sendAdd() {
@@ -48,6 +49,7 @@ const LedPreferences = ({add: plus, patch: pach, remove: del, dots, setResponse,
                 return el
             })))
             .catch(er => console.log(er))
+            .finally(() => typeof serverData.iosFetch == "function" && serverData.iosFetch())
     }
     function sendPatch() {
         const ID = Date.now()
@@ -67,6 +69,7 @@ const LedPreferences = ({add: plus, patch: pach, remove: del, dots, setResponse,
                 return el
             })))
             .catch(er => console.log(er))
+            .finally(() => typeof serverData.iosFetch == "function" && serverData.iosFetch())
     }
     function sendPreview() {
         const ID = Date.now()
@@ -82,6 +85,7 @@ const LedPreferences = ({add: plus, patch: pach, remove: del, dots, setResponse,
                 return el
             })))
             .catch(er => console.log(er))
+            .finally(() => typeof serverData.iosFetch == "function" && serverData.iosFetch())
     }
 
     useEffect(() => {
@@ -90,20 +94,22 @@ const LedPreferences = ({add: plus, patch: pach, remove: del, dots, setResponse,
         if (previewActive) {
         interval = setInterval(() => {
             // чек если ВС открыт (0 - соединение, 1 - открыто, 2 - закрываеМСЯ, 3 - Закрыто)
-            if (ws.current.readyState == 1) {
-                // кидаем в ledpreview роут сервера настройки нашего стейта
-                ws.current.send("startDemo")
+            if (ws?.current?.readyState == 1) {
+                ws.current.send("stD")
             }
-        }, 1500)}
+        }, 3500)}
         return () => {
             // чистим таймеры и сообщаем серваку что превью закончено
             clearInterval(interval)
             if (typeof interval === "number") {
-                console.log("stop Interval DEMO")
-                if (ws.current.readyState == 1) {
-                    ws.current.send("stopDemo")
+                if (ws?.current?.readyState == 1) {
+                    // console.log("stop Interval DEMO")
+                    ws.current.send("spD")
                 }
             }
+         typeof serverData.iosFetch == "function" && fetch("/ledpreview", {
+             method: "POST", body: JSON.stringify((plus && {...add, previewActive: 0 , taskID: 1}) || (pach && {...patch, previewActive: 0 ,taskID: 1}))
+         })
         }
     }, [previewActive]);
 
@@ -118,11 +124,28 @@ const LedPreferences = ({add: plus, patch: pach, remove: del, dots, setResponse,
             clearTimeout(timeout.current)
         }
     }, [add, patch]);
+    function keyboardInput(key) {
+        let value = parseInt(window.prompt("Введите значение от 0 до 100"))
+        if (isNaN(value)) {
+            return;
+        }
+        if (value > 100 || value < 0) {
+            window.alert("Значение не должно выходить за рамки допустимого диапазона 0-100")
+            return
+        }
+
+        if (pach) {
+            setPatch({...patch, [key]: value})
+        }
+        else if (plus) {
+            setAdd({...add, [key]: value})
+        }
+    }
 
     if (del) {
         return (<div className={style.leds}>
             {children}
-            <h6 className={style.text} style={{color: "#FF4933", paddingBottom: "5px"}}>Удалить точку</h6>
+            <h6 className={style.text} style={{color: "#FF4933", paddingBottom: "5px"}}>Удалить</h6>
                 <select onChange={(ev) => {
                     setRemove({time: ev.target.value})
                 }} style={{margin: "20px 0 20px 0"}}>
@@ -137,7 +160,7 @@ const LedPreferences = ({add: plus, patch: pach, remove: del, dots, setResponse,
     if (pach) {
         return (<div className={style.leds}>
             {children}
-            <h1 className={style.text} style={{color: "#E3FF33", paddingBottom: "5px"}}>Редактировать точку</h1>
+            <h1 className={style.text} style={{color: "#E3FF33", paddingBottom: "5px"}}>Редактировать</h1>
             <div className={style.topContainer}>
                 <div>
                     <h1 className={style.text}>Превью</h1>
@@ -166,36 +189,36 @@ const LedPreferences = ({add: plus, patch: pach, remove: del, dots, setResponse,
                     </div></div>
             </div>
             <div>
-                <label htmlFor={"i1"} style={{color: "red"}}>{patch.br1}</label>
+                <label htmlFor={"i1"} style={{color: "red"}} onClick={() => {keyboardInput("br1")}}>{patch.br1}</label>
                 <input name={"i1"} type={"range"} className={style.range} style={{"--SliderColor": "red"}} max={100}
                        min={0} value={patch.br1} onChange={(event) => {setPatch({...patch, br1: +event.target.value})}}/>
             </div>
             <div>
-                <label htmlFor={"i2"} style={{color: "green"}}>{patch.br2}</label>
+                <label htmlFor={"i2"} style={{color: "green"}} onClick={() => {keyboardInput("br2")}}>{patch.br2}</label>
                 <input name={"i2"} type={"range"} className={style.range} style={{"--SliderColor": "green"}}
                        max={100}
                        min={0} value={patch.br2} onChange={(event) => {setPatch({...patch, br2: +event.target.value})}}/>
             </div>
             <div>
-                <label htmlFor={"i3"} style={{color: "blue"}}>{patch.br3}</label>
+                <label htmlFor={"i3"} style={{color: "blue"}} onClick={() => {keyboardInput("br3")}}>{patch.br3}</label>
                 <input name={"i3"} type={"range"} className={style.range} style={{"--SliderColor": "blue"}}
                        max={100}
                        min={0} value={patch.br3} onChange={(event) => { setPatch({...patch, br3: +event.target.value})}}/>
             </div>
             <div>
-                <label htmlFor={"i4"} style={{color: "white"}}>{patch.br4}</label>
+                <label htmlFor={"i4"} style={{color: "white"}} onClick={() => {keyboardInput("br4")}}>{patch.br4}</label>
                 <input name={"i4"} type={"range"} className={style.range} style={{"--SliderColor": "white"}}
                        max={100}
                        min={0} value={patch.br4} onChange={(event) => {setPatch({...patch, br4: +event.target.value})}}/>
             </div>
             <div>
-                <label htmlFor={"i5"} style={{color: "darkviolet"}}>{patch.br5}</label>
+                <label htmlFor={"i5"} style={{color: "darkviolet"}} onClick={() => {keyboardInput("br5")}}>{patch.br5}</label>
                 <input name={"i5"} type={"range"} className={style.range} style={{"--SliderColor": "darkviolet"}}
                        max={100} min={0} value={patch.br5}
                        onChange={(event) => {setPatch({...patch, br5: +event.target.value})}}/>
             </div>
             <div>
-                <label htmlFor={"i6"} style={{color: "khaki"}}>{patch.br6}</label>
+                <label htmlFor={"i6"} style={{color: "khaki"}} onClick={() => {keyboardInput("br6")}}>{patch.br6}</label>
                 <input name={"i6"} type={"range"} className={style.range} style={{"--SliderColor": "khaki"}}
                        max={100}
                        min={0} value={patch.br6}
@@ -203,14 +226,14 @@ const LedPreferences = ({add: plus, patch: pach, remove: del, dots, setResponse,
 
             </div>
             <div>
-                <label htmlFor={"i7"} style={{color: "cyan"}}>{patch.br7}</label>
+                <label htmlFor={"i7"} style={{color: "cyan"}} onClick={() => {keyboardInput("br7")}}>{patch.br7}</label>
                 <input name={"i7"} type={"range"} className={style.range} style={{"--SliderColor": "cyan"}}
                        max={100} min={0} value={patch.br7}
                        onChange={(event) => {setPatch({...patch, br7: +event.target.value})}}/>
 
             </div>
             <div>
-                <label htmlFor={"i8"} style={{color: "orange"}}>{patch.br8}</label>
+                <label htmlFor={"i8"} style={{color: "orange"}} onClick={() => {keyboardInput("br8")}}>{patch.br8}</label>
                 <input name={"i8"} type={"range"} className={style.range}
                        style={{"--SliderColor": "orange", marginBottom: "20px"}} max={100} min={0}
                        value={patch.br8}
@@ -222,7 +245,7 @@ const LedPreferences = ({add: plus, patch: pach, remove: del, dots, setResponse,
     if (plus) {
         return (<div className={style.leds}>
             {children}
-            <h1 className={style.text} style={{color: "#33FF7A", paddingBottom: "5px"}}>Добавить точку</h1>
+            <h1 className={style.text} style={{color: "#33FF7A", paddingBottom: "5px"}}>Добавить</h1>
             <div className={style.topContainer}>
                 <div>
                     <h1 className={style.text}>Превью</h1>
@@ -243,64 +266,64 @@ const LedPreferences = ({add: plus, patch: pach, remove: del, dots, setResponse,
                 </div>
             </div>
                 <div>
-                    <label htmlFor={"i1"} style={{color: "red"}}>{add.br1}</label>
+                    <label htmlFor={"i1"} style={{color: "red"}} onClick={() => {keyboardInput("br1")}}>{add.br1}</label>
                     <input name={"i1"} type={"range"} className={style.range} style={{"--SliderColor": "red"}} max={100}
-                           min={0} defaultValue={add.br1} onChange={(event) => {
+                           min={0} value={add.br1} onChange={(event) => {
                         setAdd({...add, br1: +event.target.value})}}/>
                 </div>
                 <div>
-                    <label htmlFor={"i2"} style={{color: "green"}}>{add.br2}</label>
+                    <label htmlFor={"i2"} style={{color: "green"}} onClick={() => {keyboardInput("br2")}}>{add.br2}</label>
                     <input name={"i2"} type={"range"} className={style.range} style={{"--SliderColor": "green"}}
                            max={100}
-                           min={0} defaultValue={add.br2} onChange={(event) => {
+                           min={0} value={add.br2} onChange={(event) => {
                         setAdd({...add, br2: +event.target.value});
                     }}/>
                 </div>
                 <div>
-                    <label htmlFor={"i3"} style={{color: "blue"}}>{add.br3}</label>
+                    <label htmlFor={"i3"} style={{color: "blue"}} onClick={() => {keyboardInput("br3")}}>{add.br3}</label>
                     <input name={"i3"} type={"range"} className={style.range} style={{"--SliderColor": "blue"}}
                            max={100}
-                           min={0} defaultValue={add.br3} onChange={(event) => {
+                           min={0} value={add.br3} onChange={(event) => {
                         setAdd({...add, br3: +event.target.value});
                     }}/>
                 </div>
                 <div>
-                    <label htmlFor={"i4"} style={{color: "white"}}>{add.br4}</label>
+                    <label htmlFor={"i4"} style={{color: "white"}} onClick={() => {keyboardInput("br4")}}>{add.br4}</label>
                     <input name={"i4"} type={"range"} className={style.range} style={{"--SliderColor": "white"}}
                            max={100}
-                           min={0} defaultValue={add.br4} onChange={(event) => {
+                           min={0} value={add.br4} onChange={(event) => {
                         setAdd({...add, br4: +event.target.value});
                     }}/>
                 </div>
                 <div>
-                    <label htmlFor={"i5"} style={{color: "darkviolet"}}>{add.br5}</label>
+                    <label htmlFor={"i5"} style={{color: "darkviolet"}} onClick={() => {keyboardInput("br5")}}>{add.br5}</label>
                     <input name={"i5"} type={"range"} className={style.range} style={{"--SliderColor": "darkviolet"}}
-                           max={100} min={0} defaultValue={add.br5}
+                           max={100} min={0} value={add.br5}
                            onChange={(event) => {
                                setAdd({...add, br5: +event.target.value});
                            }}/>
                 </div>
                 <div>
-                    <label htmlFor={"i6"} style={{color: "khaki"}}>{add.br6}</label>
+                    <label htmlFor={"i6"} style={{color: "khaki"}} onClick={() => {keyboardInput("br6")}}>{add.br6}</label>
                     <input name={"i6"} type={"range"} className={style.range} style={{"--SliderColor": "khaki"}}
                            max={100}
-                           min={0} defaultValue={add.br6}
+                           min={0} value={add.br6}
                            onChange={(event) => {
                                setAdd({...add, br6: +event.target.value})}}/>
 
                 </div>
                 <div>
-                    <label htmlFor={"i7"} style={{color: "cyan"}}>{add.br7}</label>
+                    <label htmlFor={"i7"} style={{color: "cyan"}} onClick={() => {keyboardInput("br7")}}>{add.br7}</label>
                     <input name={"i7"} type={"range"} className={style.range} style={{"--SliderColor": "cyan"}}
-                           max={100} min={0} defaultValue={add.br7}
+                           max={100} min={0} value={add.br7}
                            onChange={(event) => {
                                setAdd({...add, br7: +event.target.value})}}/>
                 </div>
                 <div>
-                    <label htmlFor={"i8"} style={{color: "orange"}}>{add.br8}</label>
+                    <label htmlFor={"i8"} style={{color: "orange"}} onClick={() => {keyboardInput("br8")}}>{add.br8}</label>
                     <input name={"i8"} type={"range"} className={style.range}
                            style={{"--SliderColor": "orange", marginBottom: "20px"}} max={100} min={0}
-                           defaultValue={add.br8}
+                           value={add.br8}
                            onChange={(event) => {
                                setAdd({...add, br8: +event.target.value})}}/>
                 </div>

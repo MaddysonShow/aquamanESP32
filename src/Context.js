@@ -1,5 +1,4 @@
 import {createContext} from "react";
-// ВСТАВИТЬ ДАННЫЕ КОТОРЫЕ МЫ ПОЛУЧАЕМ (КЛЮЧИ и НУЛЫ В ЗНАЧЕНИЯХ)
 export const Storage = createContext(undefined)
 
 export let defVal = {
@@ -16,4 +15,5 @@ export let defVal = {
     "devices": ["255.255.255.255", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     "isMaster": null,
     "isOn": 1,
+    "iosFetch": null
 }

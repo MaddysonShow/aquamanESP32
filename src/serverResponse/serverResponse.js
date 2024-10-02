@@ -1,6 +1,10 @@
 import React from 'react';
 import module from "./serverResponse.module.css"
-const ServerResponse = ({response}) => {
+import ServerResponseInner from "./serverResponseInner";
+const ServerResponse = ({response, setResponse}) => {
+    function after2Sec(id) {
+        setResponse(prev => [...prev.filter(el => el.taskID != id)])
+    }
 
     function colText(el, ind) {
         if (response[ind] == undefined) {
@@ -18,7 +22,7 @@ const ServerResponse = ({response}) => {
             }
             innerTxt = el.value + el.response.slice(0, (el.response.length-1))
         }
-        return (<div key={el+ind} style={{backgroundColor: color}} className={module.message}>{innerTxt}</div>)
+        return (<ServerResponseInner key={el+ind} el={el} ind={ind} color={color} innerTxt={innerTxt} after2Sec={after2Sec}/>)
     }
 
     return (

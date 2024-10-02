@@ -31,10 +31,16 @@ const SettingFile = ({setResponse}) => {
 
     function uploadSettings(ev) {
         ev.preventDefault()
-
-        fetch("/uploadsettings", {method: "POST", body: JSON.stringify(fileData)})
-            .then(data => data.text())
-            .then(data => setResponse(prev => [...prev, data]))
+        const ID = Date.now()
+        setResponse(prev => [{value: "Загр.: ", response: null, taskID: ID}, ...prev])
+        fetch("/uploadsettings", {method: "POST", body: JSON.stringify({...fileData, taskID: ID})})
+            .then(data => data.json())
+            .then(data => setResponse(prev => prev.map(function (el) {
+                if (el.taskID == ID) {
+                    el.response = data.value
+                }
+                return el
+            })))
             .catch(er => console.log(er))
     }
 
