@@ -2,14 +2,14 @@ import React, {useContext, useState} from 'react';
 import styles from "../Settings.module.css";
 import {Storage} from "../../Context";
 
-const WiFi = () => {
+const WiFi = () => { // вырезано
     const {serverData} = useContext(Storage)
     const [ssid, setSsid] = useState("")
     const [password, setPassword] = useState("")
     // const [hideOldAP, setHideOldAP] = useState(0)
     const [avWifi, setAvWifi] = useState([])
     const [loading, setLoading] = useState(false)
-    const [scanLoops, setScanLoops] = useState(0)
+    let scanLoops = 0
     function sendData(ev) {
         ev.preventDefault()
         // fetch(`/connect?wifi=${ssid}&pass=${password}&hideold=${hideOldAP}`, {method: "POST"})
@@ -18,7 +18,6 @@ const WiFi = () => {
             .catch(er => console.log(er))
         alert("Переключитесь на выбранную сеть " + ssid)
     }
-
     function getAvailableNetwrks() {
         fetch(`/availablenet`, {method: "GET"})
             .then((data) => {if (!data.ok) {
@@ -29,11 +28,11 @@ const WiFi = () => {
             .then((data) => { console.log(data)
                 if (!data && scanLoops < 10) {
                     console.log(scanLoops)
-                    setScanLoops(prevState => prevState++)
+                    scanLoops++
                     setTimeout(getAvailableNetwrks, 1500)
                     return null
                 } else {
-                    setScanLoops(0)
+                    scanLoops = 0
                     return data
                 }
             })
@@ -46,8 +45,11 @@ const WiFi = () => {
             })
             .catch((er) => {
                 if (scanLoops < 10) {
-                    setScanLoops(prevState => prevState++)
-                    setTimeout(getAvailableNetwrks, 1500)
+                    scanLoops++
+                    setTimeout(getAvailableNetwrks, 500)
+                } else {
+                    setLoading(false)
+                    alert("нет подключения")
                 }
                 console.log(er)
             })

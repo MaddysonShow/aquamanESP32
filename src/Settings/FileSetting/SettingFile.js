@@ -41,12 +41,17 @@ const SettingFile = ({setResponse}) => {
                 }
                 return el
             })))
-            .catch(er => console.log(er))
+            .catch(() => setResponse(prev => prev.map(function (el) {
+                if (el.taskID == ID) {
+                    el.response = "нет подключенияE"
+                }
+                return el
+            })))
     }
 
     return (
             <div className={styles.container2}>
-                    <a href={"data:text/plain;charset=utf-8," + JSON.stringify(serverData)} download={"aquaman.json"}>Скачать файл настроек</a>
+                <a href={"data:text/plain;charset=utf-8," + JSON.stringify(serverData)} download={"aquaman.json"}>Скачать файл настроек</a>
                 <div className={styles.uploadContainer}>
                     <form onSubmit={uploadSettings}>
                        <label htmlFor="fileInput" className={styles.uploadLabel} >
